@@ -12,6 +12,7 @@ services:
     ports:
       - "3306:3306"
     restart: always
+    command: --sql_mode=""
     environment:
       - MYSQL_ROOT_PASSWORD=123
       - MYSQL_DATABASE=plant_insight
