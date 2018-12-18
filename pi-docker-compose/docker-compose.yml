@@ -12,10 +12,19 @@ services:
     ports:
       - "3306:3306"
     restart: always
-    command: --sql_mode=""
+    command:
+      --innodb_lock_wait_timeout=5
+      --sql_mode=""
     environment:
       - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_LOG_CONSOLE=true # which is its default state for MySQL 8.0 server containers
       - MYSQL_DATABASE=plant_insight
       - TZ=Asia/Shanghai
     volumes:
     - /private/var/docker_data/mysql/data/:/private/var/lib/mysql
+  adminer:
+    image: adminer
+    container_name: "pi-adminer"
+    restart: always
+    ports:
+      - 3308:8080

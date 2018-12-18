@@ -1,0 +1,53 @@
+version: '2'
+services:
+  forwarder:
+    image: "registry.grootapp.com/mqtt-influxdb-forward:20180211"
+    container_name: "mqtt-influxdb-forward"
+    restart: "always"
+    depends_on:
+      - rabbitmq
+      - influxdb
+    environment:
+      MQTT_ENDPOINT: "mqtt://rabbitmq"
+      MQTT_USERNAME: "ruff_cnc"
+      MQTT_PASSWORD: "nanchao.org"
+      TOPIC: "test/cnc"
+      INFLUX_HOST: "influxdb"
+      INFLUX_DATABASE: "ruff_cnc"
+      INFLUX_USERNAME: "ruff_cnc"
+      INFLUX_PASSWORD: "nanchao.org"
+      INFLUX_WRITE_THRESHOLD: 10
+  grafana:
+    image: "grafana/grafana"
+    container_name: "grafana"
+    restart: "always"
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: "ruff_cnc"
+      GF_SECURITY_ADMIN_PASSWORD: "nanchao.org"
+  rabbitmq:
+    image: "cyrilix/rabbitmq-mqtt"
+    container_name: "rabbitmq"
+    restart: "always"
+    hostname: "ruff_cnc"
+    ports:
+      - "1883:1883"
+    environment:
+      RABBITMQ_DEFAULT_USER: "ruff_cnc"
+      RABBITMQ_DEFAULT_PASS: "nanchao.org"
+  influxdb:
+    image: "influxdb"
+    container_name: "influxdb"
+    restart: "always"
+    ports:
+      - "8086:8086"
+    volumes:
+      - ~/docker-data/influxdb:/var/lib/influxdb
+    environment:
+      INFLUXDB_DB: "ruff_cnc"
+      INFLUXDB_HTTP_AUTH_ENABLED: "true"
+      INFLUXDB_ADMIN_USER: "nanchao"
+      INFLUXDB_ADMIN_PASSWORD: "1Nanchao.org"
+      INFLUXDB_USER: "ruff_cnc"
+      INFLUXDB_USER_PASSWORD: "nanchao.org"
