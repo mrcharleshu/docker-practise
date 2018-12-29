@@ -1,11 +1,15 @@
-version: '3'
+version: '3.1'
 services:
   redis:
-    image: "redis:latest"
+    image: "bitnami/redis:5.0.3"
     container_name: "local-redis"
     ports:
       - "6379:6379"
     restart: always
+    environment:
+      - REDIS_PASSWORD=123
+    volumes:
+      - redis_storage:/opt/bitnami/redis/etc
   mysql:
     image: "mysql:5.7"
     container_name: "local-mysql"
@@ -21,10 +25,34 @@ services:
       - MYSQL_DATABASE=plant_insight
       - TZ=Asia/Shanghai
     volumes:
-    - /private/var/docker_data/mysql/data/:/private/var/lib/mysql
+    - mysql_storage:/var/lib/mysql
   adminer:
     image: adminer
     container_name: "local-adminer"
     restart: always
     ports:
       - 3308:8080
+  fix-mongodb-permissions:
+    image: 'bitnami/mongodb:3.6'
+    user: root
+    command: chown -R 1001:1001 /opt/bitnami/mongodb
+    volumes:
+      - mongodb_storage:/opt/bitnami/mongodb
+  mongodb:
+    image: 'bitnami/mongodb:3.6'
+    container_name: "local-mongodb"
+    ports:
+      - "27017:27017"
+    environment:
+      # - ALLOW_EMPTY_PASSWORD=yes
+      - MONGODB_USERNAME=guest
+      - MONGODB_PASSWORD=123
+      - MONGODB_DATABASE=test
+    volumes:
+      - mongodb_storage:/opt/bitnami/mongodb
+    depends_on:
+      - fix-mongodb-permissions
+volumes:
+  redis_storage:
+  mysql_storage:
+  mongodb_storage:
