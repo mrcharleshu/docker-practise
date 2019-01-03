@@ -47,7 +47,7 @@ services:
       # - ALLOW_EMPTY_PASSWORD=yes
       - MONGODB_USERNAME=guest
       - MONGODB_PASSWORD=123
-      - MONGODB_DATABASE=test
+      - MONGODB_DATABASE=mintmuse
     volumes:
       - mongodb_storage:/opt/bitnami/mongodb
     depends_on:
