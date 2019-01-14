@@ -37,7 +37,8 @@ services:
     user: root
     command: chown -R 1001:1001 /opt/bitnami/mongodb
     volumes:
-      - mongodb_storage:/opt/bitnami/mongodb
+      - mongodb_storage_1:/opt/bitnami/mongodb
+      - mongodb_storage_2:/bitnami/mongodb/data
   mongodb:
     image: 'bitnami/mongodb:3.6'
     container_name: "local-mongodb"
@@ -49,10 +50,12 @@ services:
       - MONGODB_PASSWORD=123
       - MONGODB_DATABASE=mintmuse
     volumes:
-      - mongodb_storage:/opt/bitnami/mongodb
+      - mongodb_storage_1:/opt/bitnami/mongodb
+      - mongodb_storage_2:/bitnami/mongodb/data
     depends_on:
       - fix-mongodb-permissions
 volumes:
   redis_storage:
   mysql_storage:
-  mongodb_storage:
+  mongodb_storage_1:
+  mongodb_storage_2:
