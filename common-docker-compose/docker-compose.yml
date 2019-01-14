@@ -35,7 +35,7 @@ services:
   fix-mongodb-permissions:
     image: 'bitnami/mongodb:3.6'
     user: root
-    command: chown -R 1001:1001 /opt/bitnami/mongodb
+    command: chown -R 1001:1001 /opt/bitnami/mongodb && chown -R 1001:1001 /bitnami/mongodb/data
     volumes:
       - mongodb_storage_1:/opt/bitnami/mongodb
       - mongodb_storage_2:/bitnami/mongodb/data
