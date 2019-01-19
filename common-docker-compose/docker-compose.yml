@@ -34,6 +34,7 @@ services:
       - 3308:8080
   fix-mongodb-permissions:
     image: 'bitnami/mongodb:3.6'
+    container_name: "local-mongodb-permission-fix"
     user: root
     command: chown -R 1001:1001 /opt/bitnami/mongodb && chown -R 1001:1001 /bitnami/mongodb/data
     volumes:
