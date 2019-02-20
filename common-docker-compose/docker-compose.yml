@@ -33,7 +33,7 @@ services:
     ports:
       - 3308:8080
   fix-mongodb-permissions:
-    image: 'bitnami/mongodb:3.6'
+    image: 'bitnami/mongodb:4.0'
     container_name: "local-mongodb-permission-fix"
     user: root
     command: chown -R 1001:1001 /opt/bitnami/mongodb && chown -R 1001:1001 /bitnami/mongodb/data
@@ -41,12 +41,15 @@ services:
       - mongodb_storage_1:/opt/bitnami/mongodb
       - mongodb_storage_2:/bitnami/mongodb/data
   mongodb:
-    image: 'bitnami/mongodb:3.6'
+    image: 'bitnami/mongodb:4.0'
     container_name: "local-mongodb"
     ports:
       - "27017:27017"
     environment:
       # - ALLOW_EMPTY_PASSWORD=yes
+      # - MONGODB_PRIMARY_ROOT_USER=root
+      # - MONGODB_PRIMARY_ROOT_PASSWORD=123
+      - MONGODB_ROOT_PASSWORD=123
       - MONGODB_USERNAME=guest
       - MONGODB_PASSWORD=123
       - MONGODB_DATABASE=mintmuse
