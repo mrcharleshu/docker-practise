@@ -52,9 +52,9 @@ services:
       # - ALLOW_EMPTY_PASSWORD=yes
       # - MONGODB_PRIMARY_ROOT_USER=root
       # - MONGODB_PRIMARY_ROOT_PASSWORD=123
-      - MONGODB_ROOT_PASSWORD=123
-      - MONGODB_USERNAME=guest
-      - MONGODB_PASSWORD=123
+      - MONGODB_ROOT_PASSWORD=hDxK6o_7dF_YLkuUZ
+      - MONGODB_USERNAME=milu
+      - MONGODB_PASSWORD=KuJ9i_of3hU_dGz3d
       - MONGODB_DATABASE=mintmuse
     volumes:
       - mongodb_storage_1:/opt/bitnami/mongodb
