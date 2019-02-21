@@ -20,6 +20,9 @@ services:
       --innodb_lock_wait_timeout=5
       --sql_mode=""
     environment:
+      # - ALLOW_EMPTY_PASSWORD=yes
+      # - MONGODB_PRIMARY_ROOT_USER=root
+      # - MONGODB_PRIMARY_ROOT_PASSWORD=123
       - MYSQL_ROOT_PASSWORD=123
       - MYSQL_LOG_CONSOLE=true # which is its default state for MySQL 8.0 server containers
       - MYSQL_DATABASE=plant_insight
