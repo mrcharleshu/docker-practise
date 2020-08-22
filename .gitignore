@@ -1,1 +1,6 @@
 mysql-cluster/data
+service-monitor/grafana/plugins
+service-monitor/prometheus/console_libraries
+service-monitor/prometheus/consoles
+service-monitor/prometheus/data
+service-monitor/prometheus-2.20.1.darwin-amd64

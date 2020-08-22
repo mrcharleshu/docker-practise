@@ -1,0 +1,74 @@
+global:
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds.
+  # Attach these extra labels to all timeseries collected by this Prometheus instance.
+  external_labels:
+    monitor: 'codelab-monitor'
+
+rule_files:
+  - 'prometheus.rules.yml'
+
+scrape_configs:
+  - job_name: 'prometheus'
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['172.31.254.239:9090']
+        labels:
+          instance: 'prometheus-on-slave'
+
+  - job_name: 'node'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['192.168.21.203:9100']
+        labels:
+          instance: 'master'
+      - targets: ['192.168.21.253:9100']
+        labels:
+          instance: 'slave'
+
+  - job_name: 'zookeeper'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['192.168.21.253:9123']
+        labels:
+          instance: 'zookeeper-on-master'
+
+  - job_name: 'mysql'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['172.31.254.239:9104']
+        labels:
+          instance: 'master'
+      - targets: ['172.31.254.239:9105']
+        labels:
+          instance: 'slave'
+
+  - job_name: 'mongodb'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['172.31.254.239:9216']
+        labels:
+          instance: 'mongodb-on-master'
+
+  - job_name: 'redis'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['192.168.21.253:9121']
+        labels:
+          instance: 'redis-on-master'
+
+  - job_name: 'spring-boot'
+    scrape_interval: 10s
+    scrape_timeout: 10s
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['192.168.21.203:9001']
+        labels:
+          instance: 'evo-rcs'
+      - targets: ['192.168.21.203:8023']
+        labels:
+          instance: 'evo-basic'
+      - targets: ['192.168.21.203:8405']
+        labels:
+          instance: 'evo-notification'
